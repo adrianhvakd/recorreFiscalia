@@ -212,7 +212,7 @@ class TurnPanel extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                game.targetOffice.question.trim(),
+                game.activeQuestion!.question.trim(),
                 style: const TextStyle(
                   fontSize: 28,
                   height: 1.3,
@@ -223,7 +223,7 @@ class TurnPanel extends StatelessWidget {
               const SizedBox(height: 22),
               for (
                 var index = 0;
-                index < game.targetOffice.options.length;
+                index < game.activeQuestion!.options.length;
                 index++
               )
                 Padding(
@@ -246,7 +246,7 @@ class TurnPanel extends StatelessWidget {
                         ),
                       ),
                       child: Text(
-                        game.targetOffice.options[index],
+                        game.activeQuestion!.options[index],
                         style: const TextStyle(
                           fontSize: 23,
                           height: 1.25,
@@ -319,7 +319,7 @@ class TurnPanel extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    game.targetOffice.correctAnswer,
+                    game.activeQuestion!.correctAnswer,
                     style: const TextStyle(
                       fontSize: 27,
                       height: 1.4,

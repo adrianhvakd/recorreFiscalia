@@ -46,23 +46,25 @@ class OfficeBoard extends StatelessWidget {
                   padding: const EdgeInsets.all(22),
                   child: Row(
                     children: [
-                      const Expanded(
+                      Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'UN RECORRIDO POR NUESTRA INSTITUCIÓN',
-                              style: TextStyle(
+                              'ESTÁS AQUÍ · PISO ${offices[position - 1].floor} · OFICINA $position',
+                              style: const TextStyle(
                                 color: AppColors.gold,
                                 fontSize: 13,
                                 letterSpacing: 1.6,
                               ),
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             Text(
-                              'Aprende y avanza hasta la meta',
-                              style: TextStyle(
+                              offices[position - 1].shortName,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 24,
                                 fontWeight: FontWeight.w700,
@@ -72,7 +74,7 @@ class OfficeBoard extends StatelessWidget {
                         ),
                       ),
                       const Icon(
-                        Icons.flag_rounded,
+                        Icons.person_pin_circle_rounded,
                         color: AppColors.gold,
                         size: 46,
                       ),
@@ -240,6 +242,8 @@ class _OfficeTile extends StatelessWidget {
           'Casilla ${office.id}, ${office.name}${current ? ', tu posición' : ''}',
       button: onTap != null,
       child: Material(
+        elevation: current ? 10 : 0,
+        shadowColor: AppColors.gold,
         color: current
             ? AppColors.gold
             : target
@@ -255,36 +259,44 @@ class _OfficeTile extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(14),
               border: Border.all(
-                color: target ? AppColors.gold : const Color(0xFF547266),
+                color: current
+                    ? Colors.white
+                    : target
+                    ? AppColors.gold
+                    : const Color(0xFF547266),
+                width: current ? 3 : 1,
               ),
             ),
             padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 5),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    if (current)
-                      Icon(Icons.person_pin_circle, color: color, size: 19),
-                    Text(
-                      '${office.id}'.padLeft(2, '0'),
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w800,
-                        color: color,
-                      ),
-                    ),
-                    if (known && !current)
-                      const Padding(
-                        padding: EdgeInsets.only(left: 2),
-                        child: Icon(
-                          Icons.check_circle,
-                          size: 12,
-                          color: Color(0xFFADD6C2),
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (current)
+                        Icon(Icons.person_pin_circle, color: color, size: 26),
+                      Text(
+                        '${office.id}'.padLeft(2, '0'),
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.w800,
+                          color: color,
                         ),
                       ),
-                  ],
+                      if (known && !current)
+                        const Padding(
+                          padding: EdgeInsets.only(left: 2),
+                          child: Icon(
+                            Icons.check_circle,
+                            size: 12,
+                            color: Color(0xFFADD6C2),
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Flexible(

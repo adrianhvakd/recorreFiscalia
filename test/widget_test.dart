@@ -124,7 +124,9 @@ void main() {
       final game = controller();
       addTearDown(game.dispose);
       for (final office in offices) {
-        game.destination = office.id;
+        game.reset();
+        game.position = office.id - 2;
+        await tester.runAsync(game.roll);
         for (final phase in [
           TurnPhase.learning,
           TurnPhase.question,

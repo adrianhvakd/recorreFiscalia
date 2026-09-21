@@ -6,7 +6,7 @@ Juego educativo Flutter, sin conexión ni cuentas, para conocer las 27 oficinas 
 
 1. Empiezas en la casilla 1 y lanzas dos dados de seis caras.
 2. La suma elige la oficina de destino, sin mover todavía al jugador. Si sobrepasa el tablero, el destino es la casilla 27.
-3. Lees la descripción de la oficina y respondes una pregunta.
+3. Lees la descripción de la oficina y respondes una pregunta elegida al azar entre sus cinco preguntas. Cada visita realiza un nuevo sorteo, por lo que puede repetirse una pregunta.
 4. Si aciertas, avanzas hasta el destino. Si fallas, retrocedes **2 casillas desde tu posición actual**, sin bajar de la casilla 1. Siempre ves la respuesta correcta de esa oficina.
 5. Responder correctamente la pregunta del auditorio (27) y continuar completa el recorrido. No hace falta una tirada exacta.
 
@@ -28,7 +28,7 @@ lib/
   theme/app_theme.dart      Colores y tipografía
 ```
 
-Para editar información institucional, usa `data/offices.dart`. Para cambiar el retroceso, usa `GameController.penalty`. La duración de inactividad se define en `app.dart`. La pregunta añadida para Laboratorio y Genética está documentada en [la revisión visual](docs/visual-design.md).
+Para editar información institucional, usa `data/offices.dart`. Para cambiar el retroceso, usa `GameController.penalty`. La duración de inactividad se define en `app.dart`. Las 135 preguntas proceden de `BANCO DE 135 PREGUNTAS.md` y están incorporadas en `lib/data/offices.dart`; editar el Markdown no actualiza automáticamente el juego.
 
 ## Desarrollo y comprobación
 
@@ -42,7 +42,7 @@ flutter run
 flutter build apk --release --split-per-abi
 ```
 
-Las pruebas verifican conservación del contenido original, tiradas repetidas, avance y retroceso, límites del tablero, cancelación de trabajo pendiente al reiniciar, final obligatorio, sesiones sucesivas, exploración, inactividad y distribución a distintas resoluciones. Las pruebas de 4K verifican el diseño; no miden FPS o RAM del tótem.
+Las pruebas verifican conservación de nombres y descripciones, las 135 preguntas del banco, selección aleatoria, tiradas repetidas, avance y retroceso, límites del tablero, cancelación de trabajo pendiente al reiniciar, final obligatorio, sesiones sucesivas, exploración, inactividad y distribución a distintas resoluciones. Las pruebas de 4K verifican el diseño; no miden FPS o RAM del tótem.
 
 Para generar capturas de revisión con fuentes reales:
 

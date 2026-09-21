@@ -32,6 +32,8 @@ class GameController extends ChangeNotifier {
   int die2 = 1;
   int turns = 0;
   int correctAnswers = 0;
+  OfficeQuestion? _activeQuestion;
+  OfficeQuestion? get activeQuestion => _activeQuestion;
   int? selectedAnswer;
   int destination = 1;
   int _resolvedPosition = 1;
@@ -50,6 +52,7 @@ class GameController extends ChangeNotifier {
     if (!canRoll || _disposed) return;
     final generation = _generation;
     phase = TurnPhase.rolling;
+    _activeQuestion = null;
     selectedAnswer = null;
     answeredCorrectly = null;
     die1 = _random.nextInt(6) + 1;
@@ -59,6 +62,8 @@ class GameController extends ChangeNotifier {
     notifyListeners();
     await Future<void>.delayed(rollDuration);
     if (!_active(generation)) return;
+    _activeQuestion =
+        targetOffice.questions[_random.nextInt(targetOffice.questions.length)];
     phase = TurnPhase.learning;
     learnedOffices.add(destination);
     notifyListeners();
@@ -74,11 +79,11 @@ class GameController extends ChangeNotifier {
     if (_disposed ||
         phase != TurnPhase.question ||
         index < 0 ||
-        index >= targetOffice.options.length) {
+        index >= _activeQuestion!.options.length) {
       return;
     }
     selectedAnswer = index;
-    answeredCorrectly = index == targetOffice.correctIndex;
+    answeredCorrectly = index == _activeQuestion!.correctIndex;
     if (answeredCorrectly!) correctAnswers++;
     _resolvedPosition = answeredCorrectly!
         ? destination
@@ -111,6 +116,7 @@ class GameController extends ChangeNotifier {
     turns = correctAnswers = 0;
     selectedAnswer = null;
     answeredCorrectly = null;
+    _activeQuestion = null;
     learnedOffices.clear();
     phase = TurnPhase.ready;
     notifyListeners();

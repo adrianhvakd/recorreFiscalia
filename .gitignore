@@ -46,3 +46,7 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
+
+BANCO DE 135 PREGUNTAS.md
+
+*.firebase

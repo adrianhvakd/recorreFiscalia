@@ -99,7 +99,7 @@ void main() {
     await save('oficina');
     game.showQuestion();
     await save('pregunta');
-    game.answer(game.targetOffice.correctIndex);
+    game.answer(game.activeQuestion!.correctIndex);
     await save('respuesta');
     await tester.runAsync(() async {
       await game.continueTurn(animate: false);

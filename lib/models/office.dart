@@ -5,9 +5,7 @@ class Office {
     required this.name,
     required this.shortName,
     required this.description,
-    required this.question,
-    required this.options,
-    required this.correctIndex,
+    required this.questions,
   });
 
   final int id;
@@ -15,6 +13,16 @@ class Office {
   final String name;
   final String shortName;
   final String description;
+  final List<OfficeQuestion> questions;
+}
+
+class OfficeQuestion {
+  const OfficeQuestion({
+    required this.question,
+    required this.options,
+    required this.correctIndex,
+  });
+
   final String question;
   final List<String> options;
   final int correctIndex;
